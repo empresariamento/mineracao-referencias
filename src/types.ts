@@ -50,8 +50,8 @@ export interface SuggestedProfile {
   occurrences: number;
 }
 
-export interface WeeklyRunResult {
-  weekOf: string;
+export interface DailyRunResult {
+  runDate: string;
   items: AnalyzedPost[];
   sourceErrors: { platform: Platform; message: string }[];
   suggestedProfiles: SuggestedProfile[];

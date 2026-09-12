@@ -1,0 +1,634 @@
+<title>Filão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface-2: #efeade;
+    --surface-3: #e6dfcf;
+    --ink: #1c1a15;
+    --ink-muted: #6f6a58;
+    --ink-faint: #a19b86;
+    --border: #e2dbc9;
+    --accent: #d9531e;
+    --accent-ink: #fff8f2;
+    --accent-soft: #fbe4d5;
+    --good: #2f7a4f;
+    --good-soft: #dcefe2;
+    --warn: #a5780a;
+    --warn-soft: #f5e8c8;
+    --critical: #b23a2e;
+    --critical-soft: #f6dfd9;
+    --yt: #c4302b;
+    --ig: #c1327a;
+    --tt: #1f9aa6;
+    --shadow: 0 1px 2px rgba(28, 26, 21, 0.06), 0 8px 24px -12px rgba(28, 26, 21, 0.18);
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171410;
+      --surface: #1f1c16;
+      --surface-2: #29251d;
+      --surface-3: #342f24;
+      --ink: #f3efe4;
+      --ink-muted: #b0a892;
+      --ink-faint: #7c7562;
+      --border: #3a352a;
+      --accent: #ff8447;
+      --accent-ink: #201202;
+      --accent-soft: #3a2416;
+      --good: #6fc593;
+      --good-soft: #1e3327;
+      --warn: #e0b23f;
+      --warn-soft: #3a2f14;
+      --critical: #e2685a;
+      --critical-soft: #3a2018;
+      --yt: #ff6b64;
+      --ig: #ec7cb4;
+      --tt: #5fd6e0;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171410;
+    --surface: #1f1c16;
+    --surface-2: #29251d;
+    --surface-3: #342f24;
+    --ink: #f3efe4;
+    --ink-muted: #b0a892;
+    --ink-faint: #7c7562;
+    --border: #3a352a;
+    --accent: #ff8447;
+    --accent-ink: #201202;
+    --accent-soft: #3a2416;
+    --good: #6fc593;
+    --good-soft: #1e3327;
+    --warn: #e0b23f;
+    --warn-soft: #3a2f14;
+    --critical: #e2685a;
+    --critical-soft: #3a2018;
+    --yt: #ff6b64;
+    --ig: #ec7cb4;
+    --tt: #5fd6e0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; text-wrap: balance; margin: 0; }
+
+  a { color: inherit; }
+
+  button {
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    padding: 7px 12px;
+    transition: background 0.12s ease, border-color 0.12s ease, transform 0.05s ease;
+  }
+  button:hover { border-color: var(--ink-faint); }
+  button:active { transform: translateY(1px); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:disabled { opacity: 0.5; cursor: default; }
+
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  button.primary:hover { filter: brightness(1.06); }
+  button.ghost { background: transparent; border-color: transparent; color: var(--ink-muted); }
+  button.ghost:hover { background: var(--surface-2); color: var(--ink); }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 24px 80px;
+  }
+
+  header.top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .brand .tagline { color: var(--ink-muted); font-size: 13px; }
+
+  nav.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 9px; }
+  nav.tabs button {
+    border: none; background: transparent; padding: 7px 16px; border-radius: 6px;
+    color: var(--ink-muted); font-weight: 500;
+  }
+  nav.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); font-weight: 600; }
+  nav.tabs .count { font-family: "IBM Plex Mono", monospace; font-size: 11px; margin-left: 6px; color: var(--ink-faint); }
+  nav.tabs button[aria-selected="true"] .count { color: var(--accent); }
+
+  section.tab { display: none; }
+  section.tab.active { display: block; }
+
+  .empty {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 48px 32px;
+    text-align: center;
+    color: var(--ink-muted);
+    background: var(--surface);
+  }
+  .empty h3 { font-size: 19px; margin-bottom: 8px; color: var(--ink); }
+  .empty p { max-width: 46ch; margin: 0 auto; }
+  .empty code {
+    background: var(--surface-2); padding: 1px 6px; border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px;
+  }
+
+  /* ---- Novos: card grid ---- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+  }
+
+  .thumb-wrap { position: relative; aspect-ratio: 16/10; background: var(--surface-3); overflow: hidden; }
+  .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .platform-tag {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 5px; color: #fff;
+  }
+  .platform-tag.youtube { background: var(--yt); }
+  .platform-tag.instagram { background: var(--ig); }
+  .platform-tag.tiktok { background: var(--tt); }
+  .score-badge {
+    position: absolute; top: 8px; right: 8px;
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 12px;
+    padding: 3px 8px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .score-badge.unranked { background: var(--surface-2); color: var(--ink-faint); border-color: var(--border); }
+
+  .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-meta { font-size: 11.5px; color: var(--ink-faint); display: flex; justify-content: space-between; gap: 8px; }
+  .card-caption { font-size: 13px; line-height: 1.45; color: var(--ink); max-height: 3.9em; overflow: hidden; }
+  .card-hook { font-size: 12.5px; color: var(--ink-muted); border-left: 2px solid var(--accent); padding-left: 8px; }
+  .card-hook b { color: var(--ink); font-weight: 600; }
+  .card-actions { margin-top: auto; display: flex; gap: 8px; padding-top: 4px; }
+  .card-actions button { flex: 1; }
+  .card-actions a.watch-link { flex: 1; }
+  .card-actions a.watch-link button { width: 100%; }
+
+  /* ---- Fila: kanban columns ---- */
+  .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+  .kcol { background: var(--surface-2); border-radius: var(--radius); padding: 12px; min-height: 120px; }
+  .kcol h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--ink-muted); font-family: "IBM Plex Sans"; margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .kcard { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; box-shadow: var(--shadow); }
+  .kcard .cap { font-size: 12.5px; margin-bottom: 8px; }
+  .kcard .row { display: flex; gap: 6px; }
+  .kcard .row button { flex: 1; font-size: 12px; padding: 6px 8px; }
+  .script-box {
+    margin-top: 8px; padding: 10px; background: var(--surface-2); border-radius: 6px;
+    font-size: 12.5px; white-space: pre-wrap; max-height: 220px; overflow-y: auto; border: 1px solid var(--border);
+  }
+  .kcol-empty { color: var(--ink-faint); font-size: 12.5px; padding: 8px 2px; }
+
+  /* ---- Perfis ---- */
+  .panel-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 22px; }
+  .panel-block-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .panel-block-head h2 { font-size: 16px; }
+  table.profiles { width: 100%; border-collapse: collapse; }
+  table.profiles th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); padding: 8px 16px; border-bottom: 1px solid var(--border); font-weight: 600; }
+  table.profiles td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+  table.profiles tr:last-child td { border-bottom: none; }
+  .handles { display: flex; gap: 6px; flex-wrap: wrap; }
+  .handle-chip { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 2px 7px; border-radius: 5px; background: var(--surface-2); color: var(--ink-muted); }
+  .reviewed-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12.5px; color: var(--ink-muted); }
+  .reviewed-toggle input { accent-color: var(--good); }
+  .suggestion-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 12px; }
+  .suggestion-row:last-child { border-bottom: none; }
+  .suggestion-info { display: flex; align-items: center; gap: 10px; }
+  .occ-badge { font-family: "IBM Plex Mono", monospace; font-size: 11px; background: var(--warn-soft); color: var(--warn); padding: 2px 8px; border-radius: 999px; }
+
+  .error-strip { background: var(--critical-soft); color: var(--critical); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; margin-bottom: 14px; }
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--bg); padding: 9px 18px; border-radius: 999px;
+    font-size: 13px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    z-index: 50;
+  }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 760px) {
+    .kanban { grid-template-columns: 1fr; }
+    table.profiles, table.profiles thead, table.profiles tbody, table.profiles tr, table.profiles td { display: block; }
+    table.profiles thead { display: none; }
+    table.profiles tr { border-bottom: 1px solid var(--border); padding: 10px 0; }
+    table.profiles td { border-bottom: none; padding: 4px 16px; }
+  }
+</style>
+
+<div class="shell">
+  <header class="top">
+    <div class="brand">
+      <h1>Filão</h1>
+      <span class="tagline">garimpo de referências do mercado digital gringo</span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="novos" aria-selected="true">Novos <span class="count" id="count-novos"></span></button>
+      <button role="tab" data-tab="fila" aria-selected="false">Fila <span class="count" id="count-fila"></span></button>
+      <button role="tab" data-tab="perfis" aria-selected="false">Perfis <span class="count" id="count-perfis"></span></button>
+    </nav>
+  </header>
+
+  <section class="tab active" id="tab-novos">
+    <div id="novos-errors"></div>
+    <div id="novos-content">
+      <div class="empty">
+        <h3>Carregando…</h3>
+        <p>Buscando as minerações mais recentes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-fila">
+    <div id="fila-content">
+      <div class="empty"><h3>Carregando…</h3></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-perfis">
+    <div class="panel-block">
+      <div class="panel-block-head"><h2>Banco fixo</h2></div>
+      <div id="profiles-content">
+        <div class="empty" style="border:none;"><p>Carregando…</p></div>
+      </div>
+    </div>
+    <div class="panel-block">
+      <div class="panel-block-head"><h2>Sugestões pendentes</h2></div>
+      <div id="suggestions-content">
+        <div class="empty" style="border:none;"><p>Nenhuma sugestão por enquanto.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PLATFORM_LABEL = { youtube: "YouTube", instagram: "Instagram", tiktok: "TikTok" };
+  const STATUS_LABEL = { aprovado: "Aprovado", "roteiro pronto": "Roteiro pronto", gravado: "Gravado" };
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  // Deterministic short id from platform+url so the same post always maps
+  // to the same queue document, without needing the collector to mint one.
+  function itemId(platform, url) {
+    let h = 2166136261;
+    const s = platform + "|" + url;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return platform + "-" + (h >>> 0).toString(16);
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  function fmtViews(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    return String(n);
+  }
+
+  function tabInit() {
+    document.querySelectorAll("nav.tabs button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("nav.tabs button").forEach((b) => b.setAttribute("aria-selected", "false"));
+        document.querySelectorAll("section.tab").forEach((s) => s.classList.remove("active"));
+        btn.setAttribute("aria-selected", "true");
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+  }
+
+  async function main() {
+    tabInit();
+    const db = await claude.use("db");
+    if (!db) {
+      document.getElementById("novos-content").innerHTML =
+        '<div class="empty"><h3>Sem conexão com os dados</h3><p>Este visualizador não tem acesso ao banco do painel agora. Recarregue a página.</p></div>';
+      return;
+    }
+    const sample = await claude.use("sample").catch(() => null);
+
+    let latestRuns = [];
+    let queueDocs = [];
+    let profileDocs = [];
+    let suggestionDocs = [];
+
+    function renderNovos() {
+      const decided = new Set(queueDocs.map((d) => d.id));
+      const seen = new Set();
+      const items = [];
+      for (const run of latestRuns) {
+        for (const raw of run.data().items || []) {
+          const id = itemId(raw.platform, raw.url);
+          if (decided.has(id) || seen.has(id)) continue;
+          seen.add(id);
+          items.push({ id, ...raw });
+        }
+      }
+      items.sort((a, b) => {
+        const as = Number.isFinite(a.score) ? a.score : -1;
+        const bs = Number.isFinite(b.score) ? b.score : -1;
+        return bs - as;
+      });
+
+      document.getElementById("count-novos").textContent = items.length || "";
+
+      const errors = [];
+      for (const run of latestRuns) {
+        for (const e of run.data().sourceErrors || []) errors.push(e);
+      }
+      document.getElementById("novos-errors").innerHTML = errors.length
+        ? '<div class="error-strip">' + errors.slice(0, 4).map((e) => `${escapeHtml(e.platform)}: ${escapeHtml(e.message)}`).join(" · ") + "</div>"
+        : "";
+
+      const content = document.getElementById("novos-content");
+      if (items.length === 0) {
+        content.innerHTML =
+          '<div class="empty"><h3>Nada novo pra revisar</h3><p>Quando a rotina diária publicar minerações, elas aparecem aqui — peça pro Claude <code>publicar as minerações</code> depois de rodar a coleta.</p></div>';
+        return;
+      }
+
+      content.innerHTML = '<div class="grid">' + items.map(cardHtml).join("") + "</div>";
+      content.querySelectorAll("[data-approve]").forEach((btn) => {
+        btn.addEventListener("click", () => decide(items.find((i) => i.id === btn.dataset.approve), "aprovado"));
+      });
+      content.querySelectorAll("[data-discard]").forEach((btn) => {
+        btn.addEventListener("click", () => decide(items.find((i) => i.id === btn.dataset.discard), "descartado"));
+      });
+    }
+
+    function cardHtml(item) {
+      const ranked = Number.isFinite(item.score);
+      const scoreLabel = ranked ? "×" + item.score.toFixed(1) : "novo";
+      const hookLine = item.hook ? `<div class="card-hook"><b>gancho</b> — ${escapeHtml(item.hook)}</div>` : "";
+      return `
+        <article class="card">
+          <div class="thumb-wrap">
+            <img src="${escapeHtml(item.thumbnailUrl)}" alt="" loading="lazy" onerror="this.style.opacity=0">
+            <span class="platform-tag ${item.platform}">${PLATFORM_LABEL[item.platform] || item.platform}</span>
+            <span class="score-badge ${ranked ? "" : "unranked"}">${scoreLabel}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta"><span>${fmtViews(item.views)} views</span><span>${escapeHtml((item.postedAt || "").slice(0, 10))}</span></div>
+            <div class="card-caption">${escapeHtml(item.caption || "(sem legenda)")}</div>
+            ${hookLine}
+            <div class="card-actions">
+              <a class="watch-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener"><button type="button">Assistir</button></a>
+              <button type="button" data-discard="${item.id}" class="ghost" title="Descartar">Descartar</button>
+              <button type="button" data-approve="${item.id}" class="primary">Aprovar</button>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    async function decide(item, status) {
+      if (!item) return;
+      try {
+        await db.collection("queue").doc(item.id).set({ ...item, status, approvedAt: new Date().toISOString() });
+        showToast(status === "aprovado" ? "Aprovado — foi pra fila" : "Descartado");
+      } catch (e) {
+        showToast("Não deu pra salvar: " + (e.message || e.code));
+      }
+    }
+
+    function renderFila() {
+      const groups = { aprovado: [], "roteiro pronto": [], gravado: [] };
+      for (const doc of queueDocs) {
+        const data = doc.data();
+        if (groups[data.status]) groups[data.status].push({ id: doc.id, ...data });
+      }
+      document.getElementById("count-fila").textContent = groups.aprovado.length + groups["roteiro pronto"].length || "";
+
+      const content = document.getElementById("fila-content");
+      content.innerHTML = '<div class="kanban">' +
+        Object.entries(groups).map(([status, docs]) => `
+          <div class="kcol">
+            <h3>${STATUS_LABEL[status]} <span class="num">${docs.length}</span></h3>
+            ${docs.length ? docs.map((d) => kanbanCardHtml(status, d)).join("") : '<div class="kcol-empty">vazio</div>'}
+          </div>`).join("") +
+        "</div>";
+
+      content.querySelectorAll("[data-gen-script]").forEach((btn) => btn.addEventListener("click", () => genScript(btn.dataset.genScript)));
+      content.querySelectorAll("[data-mark-recorded]").forEach((btn) => btn.addEventListener("click", () => markRecorded(btn.dataset.markRecorded)));
+      content.querySelectorAll("[data-toggle-script]").forEach((btn) => btn.addEventListener("click", () => {
+        const box = document.getElementById("script-" + btn.dataset.toggleScript);
+        box.hidden = !box.hidden;
+      }));
+    }
+
+    function kanbanCardHtml(status, doc) {
+      const scriptBox = doc.script
+        ? `<div class="script-box" id="script-${doc.id}" hidden>${escapeHtml(doc.script)}</div>`
+        : "";
+      let actions = "";
+      if (status === "aprovado") {
+        actions = `<div class="row"><button data-gen-script="${doc.id}" class="primary">Gerar roteiro</button></div>`;
+      } else if (status === "roteiro pronto") {
+        actions = `<div class="row">
+          <button data-toggle-script="${doc.id}">Ver roteiro</button>
+          <button data-mark-recorded="${doc.id}" class="primary">Marcar gravado</button>
+        </div>`;
+      } else {
+        actions = doc.script ? `<div class="row"><button data-toggle-script="${doc.id}">Ver roteiro</button></div>` : "";
+      }
+      return `
+        <div class="kcard">
+          <div class="cap">${escapeHtml((doc.caption || "").slice(0, 90))}${(doc.caption || "").length > 90 ? "…" : ""}</div>
+          ${actions}
+          ${scriptBox}
+        </div>`;
+    }
+
+    async function genScript(id) {
+      if (!sample) { showToast("Geração de roteiro indisponível nesta visualização."); return; }
+      const doc = queueDocs.find((d) => d.id === id);
+      if (!doc) return;
+      const data = doc.data();
+      const btn = document.querySelector(`[data-gen-script="${id}"]`);
+      if (btn) { btn.disabled = true; btn.textContent = "Gerando…"; }
+      try {
+        const prompt = [
+          "Você adapta referências de criadores gringos de marketing/negócio online para o mercado brasileiro.",
+          "Com base no post abaixo, escreva um roteiro curto (formato Reels/TikTok/Shorts, 30-60s) em português do Brasil,",
+          "mantendo o mesmo gancho e estrutura, mas adaptando exemplos, gírias e contexto pro público brasileiro de mercado digital.",
+          "",
+          `Plataforma: ${data.platform}`,
+          `Legenda original: ${data.caption || "(nenhuma)"}`,
+          data.hook ? `Gancho identificado: ${data.hook}` : "",
+          data.structure ? `Estrutura: ${data.structure}` : "",
+          data.angle ? `Ângulo: ${data.angle}` : "",
+          data.transcript ? `Transcrição (trecho): ${data.transcript.slice(0, 2500)}` : "",
+          "",
+          'Responda só com um JSON no formato {"script": "..."} — o roteiro em texto corrido, com quebras de linha onde fizer sentido.',
+        ].filter(Boolean).join("\n");
+
+        const result = await sample.json(prompt, { modelTier: "default", cache: false });
+        await db.collection("queue").doc(id).update({
+          script: String(result.script || ""),
+          status: "roteiro pronto",
+          scriptGeneratedAt: new Date().toISOString(),
+        });
+        showToast("Roteiro gerado");
+      } catch (e) {
+        showToast("Não deu pra gerar: " + (e.code || e.message || "erro"));
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = "Gerar roteiro"; }
+      }
+    }
+
+    async function markRecorded(id) {
+      try {
+        await db.collection("queue").doc(id).update({ status: "gravado", recordedAt: new Date().toISOString() });
+        showToast("Marcado como gravado");
+      } catch (e) {
+        showToast("Não deu pra salvar: " + (e.message || e.code));
+      }
+    }
+
+    function renderProfiles() {
+      document.getElementById("count-perfis").textContent = profileDocs.length || "";
+      const content = document.getElementById("profiles-content");
+      if (profileDocs.length === 0) {
+        content.innerHTML = '<div class="empty" style="border:none;"><p>Nenhum perfil cadastrado ainda.</p></div>';
+      } else {
+        content.innerHTML = `
+          <table class="profiles">
+            <thead><tr><th>Criador</th><th>Handles</th><th>Revisado</th></tr></thead>
+            <tbody>
+              ${profileDocs.map((doc) => {
+                const d = doc.data();
+                const chips = Object.entries(d.handles || {}).map(([p, h]) => `<span class="handle-chip">${p[0].toUpperCase()}: ${escapeHtml(h)}</span>`).join("");
+                return `<tr>
+                  <td>${escapeHtml(d.displayName)}</td>
+                  <td><div class="handles">${chips}</div></td>
+                  <td><label class="reviewed-toggle"><input type="checkbox" data-review="${doc.id}" ${d.reviewed ? "checked" : ""}> confirmado</label></td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>`;
+        content.querySelectorAll("[data-review]").forEach((cb) => {
+          cb.addEventListener("change", async () => {
+            try { await db.collection("profiles").doc(cb.dataset.review).update({ reviewed: cb.checked }); }
+            catch (e) { showToast("Não deu pra salvar"); cb.checked = !cb.checked; }
+          });
+        });
+      }
+
+      const sugContent = document.getElementById("suggestions-content");
+      if (suggestionDocs.length === 0) {
+        sugContent.innerHTML = '<div class="empty" style="border:none;"><p>Nenhuma sugestão por enquanto — aparecem aqui criadores que se repetem nas buscas de viral do nicho.</p></div>';
+      } else {
+        sugContent.innerHTML = suggestionDocs.map((doc) => {
+          const d = doc.data();
+          return `
+            <div class="suggestion-row">
+              <div class="suggestion-info">
+                <strong>${escapeHtml(d.displayName)}</strong>
+                <span class="handle-chip">${PLATFORM_LABEL[d.platform] || d.platform}: ${escapeHtml(d.handle)}</span>
+                <span class="occ-badge">visto ${d.occurrences}×</span>
+              </div>
+              <div class="row" style="display:flex; gap:6px;">
+                <button class="ghost" data-dismiss="${doc.id}">Descartar</button>
+                <button class="primary" data-promote="${doc.id}">Promover</button>
+              </div>
+            </div>`;
+        }).join("");
+        sugContent.querySelectorAll("[data-promote]").forEach((btn) => btn.addEventListener("click", () => promote(btn.dataset.promote)));
+        sugContent.querySelectorAll("[data-dismiss]").forEach((btn) => btn.addEventListener("click", () => dismissSuggestion(btn.dataset.dismiss)));
+      }
+    }
+
+    async function promote(id) {
+      const doc = suggestionDocs.find((d) => d.id === id);
+      if (!doc) return;
+      const d = doc.data();
+      try {
+        await db.collection("profiles").doc(d.profileId || id).set({
+          displayName: d.displayName,
+          handles: { [d.platform]: d.handle },
+          fixed: true,
+          reviewed: false,
+        });
+        await db.collection("suggestions").doc(id).delete();
+        showToast(`${d.displayName} promovido ao banco fixo`);
+      } catch (e) {
+        showToast("Não deu pra promover");
+      }
+    }
+
+    async function dismissSuggestion(id) {
+      try { await db.collection("suggestions").doc(id).delete(); }
+      catch (e) { showToast("Não deu pra descartar"); }
+    }
+
+    db.collection("runs").orderBy("runDate", "desc").limit(14).onSnapshot(
+      (snap) => { latestRuns = snap.docs; renderNovos(); },
+      () => showToast("Conexão com as minerações caiu"),
+    );
+    db.collection("queue").limit(1000).onSnapshot(
+      (snap) => { queueDocs = snap.docs; renderNovos(); renderFila(); },
+      () => showToast("Conexão com a fila caiu"),
+    );
+    db.collection("profiles").onSnapshot(
+      (snap) => { profileDocs = snap.docs; renderProfiles(); },
+      () => showToast("Conexão com os perfis caiu"),
+    );
+    db.collection("suggestions").onSnapshot(
+      (snap) => { suggestionDocs = snap.docs; renderProfiles(); },
+      () => {},
+    );
+  }
+
+  main();
+</script>

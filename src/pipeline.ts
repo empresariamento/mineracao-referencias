@@ -2,8 +2,8 @@ import { averageViews, scoreAgainstNicheAverage, scoreAgainstProfileHistory, sel
 import type { RawPost, ScoredPost } from "./types.js";
 import type { ViralHit } from "./profiles.js";
 
-const TOP_ITEMS_LIMIT = 25;
-const RECENT_WINDOW_DAYS = 7;
+const TOP_ITEMS_LIMIT = 15;
+const RECENT_WINDOW_DAYS = 1;
 
 export function isWithinDays(isoDate: string, days: number, now: Date = new Date()): boolean {
   const posted = new Date(isoDate).getTime();
@@ -11,9 +11,9 @@ export function isWithinDays(isoDate: string, days: number, now: Date = new Date
   return posted >= cutoff;
 }
 
-/** Scores this week's candidates (posts from the last RECENT_WINDOW_DAYS)
- * from one profile's fetched history, each against the average of the
- * REST of that same history (excluding itself). */
+/** Scores today's candidates (posts from the last RECENT_WINDOW_DAYS) from
+ * one profile's fetched history, each against the average of the REST of
+ * that same history (excluding itself). */
 export function scoreProfileCandidates(
   fullHistory: RawPost[],
   days = RECENT_WINDOW_DAYS,
@@ -33,7 +33,7 @@ export function scoreNicheSearchHits(hits: RawPost[]): ScoredPost[] {
   return hits.map((hit) => scoreAgainstNicheAverage(hit, nicheAverage));
 }
 
-export function buildWeeklySelection(
+export function buildDailySelection(
   profileScored: ScoredPost[],
   nicheScored: ScoredPost[],
   limit = TOP_ITEMS_LIMIT,

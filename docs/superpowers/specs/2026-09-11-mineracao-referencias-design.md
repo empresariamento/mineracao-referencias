@@ -1,7 +1,41 @@
 # Sistema de Mineração de Referências — Design
 
 **Data:** 2026-09-11
-**Status:** aprovado para implementação
+**Status:** implementado, com dois desvios do design original (ver Adendo)
+
+## Adendo (2026-09-11, durante a implementação)
+
+Dois pontos do design original mudaram depois de testes reais contra a
+infraestrutura de agentes agendados:
+
+1. **Cadência: diária, não semanal.** O usuário pediu a mudança depois da
+   aprovação inicial. Impacto: janela de comparação do score passou de 7
+   para 1 dia (`RECENT_WINDOW_DAYS` em `src/pipeline.ts`), o corte de itens
+   por rodada caiu de 25 para 15, e todo nome de arquivo/variável/coleção
+   que dizia "weekly" virou "daily"/"run".
+
+2. **Publicação no painel não é automática.** Testei a rotina agendada na
+   nuvem publicando de verdade num Artifact: ela roda a sessão Claude Code,
+   clona o repositório, e consegue **publicar** um Artifact sem travar. Mas
+   a chamada que **grava dados** nele (`write_db` — essencial pro pipeline
+   salvar os resultados) sempre dispara um prompt de permissão do Claude
+   Code, mesmo com um `.claude/settings.json` no repositório liberando a
+   ferramenta `Artifact` inteira via `permissions.allow`. Numa rotina sem
+   ninguém presente pra aprovar, ela trava para sempre em
+   `requires_action` — confirmado em três tentativas, incluindo uma com o
+   repositório e o allowlist corretos. Não encontrei a string de permissão
+   granular certa (algo como `Artifact(write_db)`) porque investigá-la
+   exigia mexer em configuração de permissões, e o modo operacional da
+   sessão que fazia essa investigação bloqueou essa ação por política.
+   **Solução adotada:** a rotina diária roda sozinha até o fim (coleta,
+   score, transcrição, análise) e commita um JSON em
+   `data/runs/<data>.json` no próprio repositório — sem tocar no Artifact.
+   Publicar esse JSON no painel passou a ser um pedido de ~30s numa
+   conversa normal com o Claude ("publica as minerações"), onde os
+   prompts de permissão resolvem na hora porque há alguém ali para
+   responder. Ver `routines/daily-mining.md` para o prompt exato dos dois
+   fluxos. Fica como pendência futura destravar a publicação 100%
+   automática, caso a string de permissão certa seja encontrada.
 
 ## Contexto e objetivo
 

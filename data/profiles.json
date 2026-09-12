@@ -1,0 +1,17 @@
+[
+  { "id": "hormozi", "displayName": "Alex Hormozi", "handles": { "youtube": "@AlexHormozi", "instagram": "hormozi", "tiktok": "hormozi1" }, "fixed": true, "reviewed": false },
+  { "id": "garyvee", "displayName": "Gary Vaynerchuk", "handles": { "youtube": "@garyvee", "instagram": "garyvee", "tiktok": "garyvee" }, "fixed": true, "reviewed": false },
+  { "id": "neilpatel", "displayName": "Neil Patel", "handles": { "youtube": "@NeilPatel", "instagram": "neilpatel", "tiktok": "neilpatel" }, "fixed": true, "reviewed": false },
+  { "id": "aliabdaal", "displayName": "Ali Abdaal", "handles": { "youtube": "@aliabdaal", "instagram": "aliabdaal", "tiktok": "ali.abdaal" }, "fixed": true, "reviewed": false },
+  { "id": "justinwelsh", "displayName": "Justin Welsh", "handles": { "youtube": "@JustinWelsh", "instagram": "justinwelsh" }, "fixed": true, "reviewed": false },
+  { "id": "dankoe", "displayName": "Dan Koe", "handles": { "youtube": "@dan-koe", "instagram": "thedankoe", "tiktok": "thedankoe" }, "fixed": true, "reviewed": false },
+  { "id": "imangadzhi", "displayName": "Iman Gadzhi", "handles": { "youtube": "@ImanGadzhi", "instagram": "imangadzhi", "tiktok": "imangadzhi" }, "fixed": true, "reviewed": false },
+  { "id": "russellbrunson", "displayName": "Russell Brunson", "handles": { "youtube": "@russellbrunson", "instagram": "russellbrunson" }, "fixed": true, "reviewed": false },
+  { "id": "noahkagan", "displayName": "Noah Kagan", "handles": { "youtube": "@noahkagan", "instagram": "noahkagan", "tiktok": "noahkagan" }, "fixed": true, "reviewed": false },
+  { "id": "sahilbloom", "displayName": "Sahil Bloom", "handles": { "youtube": "@SahilBloom", "instagram": "sahilbloom", "tiktok": "sahilbloom" }, "fixed": true, "reviewed": false },
+  { "id": "nathanbarry", "displayName": "Nathan Barry", "handles": { "youtube": "@nathanbarry" }, "fixed": true, "reviewed": false },
+  { "id": "codiesanchez", "displayName": "Codie Sanchez", "handles": { "youtube": "@codiesanchez", "instagram": "codiesanchez", "tiktok": "codiesanchez" }, "fixed": true, "reviewed": false },
+  { "id": "chrisdo", "displayName": "Chris Do", "handles": { "youtube": "@thefutur", "instagram": "thechrisdo", "tiktok": "thechrisdo" }, "fixed": true, "reviewed": false },
+  { "id": "grantcardone", "displayName": "Grant Cardone", "handles": { "youtube": "@GrantCardone", "instagram": "grantcardone", "tiktok": "grantcardone" }, "fixed": true, "reviewed": false },
+  { "id": "shaanpuri", "displayName": "Shaan Puri", "handles": { "youtube": "@ShaanVP", "instagram": "shaanvp" }, "fixed": true, "reviewed": false }
+]

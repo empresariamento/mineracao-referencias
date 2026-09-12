@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildWeeklySelection, collectViralHits, isWithinDays, scoreNicheSearchHits, scoreProfileCandidates } from "./pipeline.js";
+import { buildDailySelection, collectViralHits, isWithinDays, scoreNicheSearchHits, scoreProfileCandidates } from "./pipeline.js";
 import type { RawPost, ScoredPost } from "./types.js";
 
 function post(overrides: Partial<RawPost> = {}): RawPost {
@@ -64,7 +64,7 @@ describe("scoreNicheSearchHits", () => {
   });
 });
 
-describe("buildWeeklySelection", () => {
+describe("buildDailySelection", () => {
   function scored(overrides: Partial<ScoredPost> = {}): ScoredPost {
     return { ...post(), score: 1, scoreBasis: "profile-history", ...overrides };
   }
@@ -72,7 +72,7 @@ describe("buildWeeklySelection", () => {
   it("merges profile and niche scored posts, ranked first", () => {
     const profileScored = [scored({ score: 3, url: "profile-hit" })];
     const nicheScored = [scored({ score: 9, url: "niche-hit", scoreBasis: "niche-average" })];
-    const result = buildWeeklySelection(profileScored, nicheScored, 10);
+    const result = buildDailySelection(profileScored, nicheScored, 10);
     expect(result.map((p) => p.url)).toEqual(["niche-hit", "profile-hit"]);
   });
 });
